@@ -1,0 +1,35 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<title>技术员阿宁滚动金额效果</title>
+<!-- 微信：jsyaning -->
+<style> 
+body {
+    background: #29221a;
+}
+#ljje { font-size: 18px; text-align: center; margin-top: 200px;color: #fff; }  
+#je { font-size: 50px; text-align: center;color: #f59e3d;letter-spacing: 0.1em;font: bold 54px/75px "Arial";display: inline-block;} 
+#amount { font-size: 50px; text-align: center;color: #f59e3d;letter-spacing: 0.1em;font: bold 54px/75px "Arial";display: inline-block;} 
+.zj {text-align: center;}
+ </style> 
+ </head> 
+ <body> 
+  <div class="zj">
+  <div id="ljje">累积成交金额</div>
+  <div id="je">￥</div>
+  <div id="amount">0</div> 
+</div>
+  <script> var start = 13201; // 起始金额 
+  var end = 65411; // 结束金额 
+  var duration = 2000000; // 滚动时间，单位为毫秒 
+  var step = (end - start) / (duration / 10); // 每10毫秒增加的金额
+  var interval = setInterval(function() {
+          start += step;
+          document.getElementById("amount").innerHTML = Math.floor(start);
+          if (start >= end) {
+              clearInterval(interval);
+          }
+      }, 10);
+  </script>
+  </body>
+  </html>
