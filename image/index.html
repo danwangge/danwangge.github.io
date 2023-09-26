@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>批量上传图片</title>
+</head>
+<body>
+    <h2>批量上传图片</h2>
+    <input type="file" id="fileInput" multiple>
+    <button onclick="uploadFiles()">上传文件</button>
+    <div id="status"></div>
+
+    <script>
+        function uploadFiles() {
+            var fileInput = document.getElementById('fileInput');
+            var status = document.getElementById('status');
+
+            if (fileInput.files.length === 0) {
+                status.innerHTML = '请选择要上传的文件。';
+                return;
+            }
+
+            var formData = new FormData();
+
+            for (var i = 0; i < fileInput.files.length; i++) {
+                var file = fileInput.files[i];
+                formData.append('files[]', file, file.name);
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'upload.php', true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    status.innerHTML = '文件上传成功。';
+                } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                    status.innerHTML = '文件上传失败。';
+                }
+            };
+
+            xhr.upload.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    var percentage = Math.round((e.loaded / e.total) * 100);
+                    status.innerHTML = '上传中: ' + percentage + '%';
+                }
+            };
+
+            xhr.send(formData);
+        }
+    </script>
+</body>
+</html>
