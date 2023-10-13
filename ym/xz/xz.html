@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>请复制链接到浏览器打开</title>
+    <style>
+    button{
+    background-color: #40ad81;
+    width: 200px;
+    text-align: center;
+    color: #fff;
+    border: solid;
+    height: 43px;
+    font-size: 15px;
+      }
+    </style>
 </head>
 <body>
   <p>ps：微信不让打开，请复制链接到浏览器打开</p>  
     <h2>下载链接</h2>
-<p id="url"></p>  
+<p id="url"></p> 
+<button onclick="copyUrl()">一键复制网址</button>   
 <script>  
 var url = document.URL.split('?url=')[1];  
 if (url == undefined) {  
@@ -17,5 +29,16 @@ if (url == undefined) {
   document.getElementById("url").innerHTML = url;  
 }  
 </script> 
+  
+<script>  
+  function copyUrl() {  
+    var url = document.getElementById("url").innerText;  
+    navigator.clipboard.writeText(url).then(function() {  
+      alert('一键复制成功！'); // 使用alert显示复制成功的消息  
+    }, function(err) {  
+      console.error('复制失败:', err);  
+    });  
+  }  
+  </script>   
 </body>
 </html>
