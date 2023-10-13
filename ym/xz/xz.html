@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>请复制链接到浏览器打开</title>
+</head>
+<body>
+    <h2>下载链接</h2>  
+<p id="url"></p>  
+<script>  
+var url = document.URL.split('?url=')[1];  
+if (url == undefined) {  
+  document.getElementById("url").innerHTML = "下载链接为空";  
+} else {  
+  document.getElementById("url").innerHTML = url;  
+}  
+</script> 
+</body>
+</html>
