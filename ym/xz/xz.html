@@ -14,14 +14,16 @@
     height: 43px;
     font-size: 15px;
       }
+      p{
+        width: 100%;
+      }
     </style>
 </head>
 <body>
   <p>ps：微信不让打开，请复制链接到浏览器打开</p>
-  <p>ps：手机端一键复制网址不会提示成功通知</p>
+  <p>ps：如遇手机端一键复制失败请手动复制</p>  
     <h2>下载链接</h2>
-<p id="url"></p>
-<div id="status"></div>
+<textarea id="url" rows="4" cols="40"></textarea>
 <button onclick="copyUrl()">一键复制网址</button>   
 <script>  
 var url = document.URL.split('?url=')[1];  
@@ -31,17 +33,16 @@ if (url == undefined) {
   document.getElementById("url").innerHTML = url;  
 }  
 </script> 
-  
 <script>  
   function copyUrl() {  
-    var url = document.getElementById("url").innerText;  
-    navigator.clipboard.writeText(url).then(function() {  
-     document.getElementById("status").innerText = "复制成功！"; // 使用页面内消息显示复制成功的消息
-     alert('一键复制成功！'); // 使用alert显示复制成功的消息
+    var urlTextarea = document.getElementById("url");  
+    var urlContent = urlTextarea.value;  
+    navigator.clipboard.writeText(urlContent).then(function() {  
+      alert('复制成功！'); // 使用alert显示复制成功的消息  
     }, function(err) {  
       console.error('复制失败:', err);  
     });  
   }  
-  </script>   
+  </script>
 </body>
 </html>
