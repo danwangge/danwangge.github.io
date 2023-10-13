@@ -20,7 +20,8 @@
   <p>ps：微信不让打开，请复制链接到浏览器打开</p>
   <p>ps：手机端一键复制网址不会提示成功通知</p>
     <h2>下载链接</h2>
-<p id="url"></p> 
+<p id="url"></p>
+<div id="status"></div>
 <button onclick="copyUrl()">一键复制网址</button>   
 <script>  
 var url = document.URL.split('?url=')[1];  
@@ -35,6 +36,7 @@ if (url == undefined) {
   function copyUrl() {  
     var url = document.getElementById("url").innerText;  
     navigator.clipboard.writeText(url).then(function() {  
+     document.getElementById("status").innerText = "复制成功！"; // 使用页面内消息显示复制成功的消息
      alert('一键复制成功！'); // 使用alert显示复制成功的消息
     }, function(err) {  
       console.error('复制失败:', err);  
