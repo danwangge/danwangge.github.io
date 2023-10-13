@@ -34,7 +34,6 @@ if (url == undefined) {
   function copyUrl() {  
     var url = document.getElementById("url").innerText;  
     navigator.clipboard.writeText(url).then(function() {  
-      alert('一键复制成功！'); // 使用alert显示复制成功的消息
     document.getElementById("url").innerText = "你已成功一键复制，去粘贴吧~";
     }, function(err) {  
       console.error('复制失败:', err);  
