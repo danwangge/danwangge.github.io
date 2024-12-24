@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>舔狗翻译器</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #333;
+    }
+  .input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 500px;
+    }
+    label {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #555;
+    }
+    textarea {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      height: 120px;
+      resize: none;
+      width: 100%;
+      margin-bottom: 30px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 14px 22px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 200px;
+      margin-bottom: 40px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  .result-box {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
+      background-color: white;
+    }
+  .result-box:first-child {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+ 
+<body>
+  <h1>女友话翻译器</h1>
+  <div class="input-container">
+    <label for="girlWords">请输入ta的原话：</label>
+    <textarea id="girlWords"></textarea>
+    <button id="translateBtn">翻译</button>
+  </div>
+  <div class="result-box" id="boyMeaning">男生：</div>
+  <div class="result-box" id="girlMeaning">女生：</div>
+ 
+  <script>
+    const translations = {
+      "睡吧": "睡个试试？",
+      "我很忙": "能不能不要来烦我？",
+      "今晚要加班啊？": "是工作重要，还是我重要？",
+      "要去哪儿？": "我希望告诉我，别让我担心。",
+      "我没事。": "我有事，但我不想让知道。",
+      "我可以自己去做。": "我知道不想帮忙，但我其实很希望能主动一点。",
+      "可以不用给我买东西。": "但如果真的送我东西，我会很高兴。",
+      "随便。": "随便我？我当然有意见，只是不够了解。",
+      "我不想说了。": "我有很多话要说，但我现在有点生气，不知道怎么表达。",
+      "怎么不陪我了？": "我需要在我身边，我有点不开心。",
+      "什么时候能回来？": "我已经在等，感觉有些孤单。",
+      "知道我想要什么吗？": "其实我希望能主动猜出来，我需要理解我。",
+      "怎么总是这样？": "我对有点失望，希望能改进。",
+      "别再问了。": "我不想再重复同一个问题，但我心里真的有点烦。",
+      "别生气。": "我知道生气了，我有点害怕，但我不敢直接面对。",
+      "我有点不高兴。": "我其实有很多情绪，但不想一下子爆发出来。",
+      "总是这么忙。": "我知道有很多工作，但我也希望能花些时间陪我。",
+      "我不在乎。": "我很在乎，只是怕显得我太在乎。",
+      "是不是觉得我很麻烦？": "我觉得自己很麻烦，是不是觉得不耐烦？",
+      "我不喜欢那样。": "我不喜欢那样做，我希望能改变。",
+      "真的不懂我。": "我想能理解我内心的感受，但似乎并没有注意到。",
+      "不觉得我最近有点变了吗？": "我可能在感情上有些变化，想看看是否注意到。",
+      "我自己去吧。": "我知道忙，但我心里希望能陪我一起去。",
+      "我还好。": "其实我并不好，但我不想让担心。",
+      "能不能听我说话？": "我觉得不够关注我，我希望能倾听我心里的声音。",
+      "随便啦，什么都行。": "是不是不在乎我？我其实有很多想法，只是没有在意。",
+      "怎么总是忘记我的话？": "不重视我说的话，我有点失望。",
+      "就知道工作。": "总是忙工作，我希望能更关注一下我和我们的关系。",
+      "我只是想陪我一下。": "我不需要什么特别的东西，只是希望能在我身边。",
+      "是不是觉得我不重要？": "我需要的关心，感觉有些忽略我。",
+      "对我好一点吧。": "我希望能表现得更体贴些，给我一些温暖和关注。"
+    };
+ 
+    function calculateSimilarity(str1, str2) {
+      let intersection = 0;
+      for (let char of str1) {
+        if (str2.includes(char)) intersection++;
+        console.log('当前字符:', char, '相同字符数量:', intersection);
+      }
+      console.log('str1长度:', str1.length, 'str2长度:', str2.length);
+      console.log('计算得到的相似度:', intersection / Math.max(str1.length, str2.length));
+      return intersection / Math.max(str1.length, str2.length);
+    }
+ 
+    window.onload = function () {
+      const translateBtn = document.getElementById('translateBtn');
+      translateBtn.onclick = function () {
+        console.log('translate 函数被调用了');
+        const boyMeaningElement = document.getElementById('boyMeaning');
+        const girlMeaningElement = document.getElementById('girlMeaning');
+        if (!boyMeaningElement ||!girlMeaningElement) {
+          console.log('无法获取到结果展示元素，请检查元素 ID 是否正确');
+          return;
+        }
+        const girlWords = document.getElementById('girlWords').value;
+        let maxSimilarity = 0;
+        let bestMatch;
+        for (const key in translations) {
+          const similarity = calculateSimilarity(girlWords, key);
+          if (similarity > maxSimilarity) {
+            maxSimilarity = similarity;
+            bestMatch = key;
+          }
+        }
+        boyMeaningElement.innerHTML = `男生：${girlWords}`;
+        console.log('设置后的男生含义展示内容:', boyMeaningElement.innerHTML);
+        girlMeaningElement.innerHTML = maxSimilarity > 0? `女生：${translations[bestMatch]}` : `女生：给我买包`;
+        console.log('设置后的女生含义展示内容:', girlMeaningElement.innerHTML);
+      };
+    };
+  </script>
+</body>
+ 
+</html>
